@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Size Prediction App</title>
+    <style>
+        /* Fullscreen background with gradient */
+        body {
+            font-family: Arial, sans-serif;
+            background: linear-gradient(to right, #6a11cb, #2575fc); /* Gradient background */
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            overflow: hidden;
+            color: #fff; /* White text for better contrast */
+        }
+
+        .container {
+            max-width: 900px; /* Increased container size */
+            margin: 0;
+            padding: 60px;
+            background-color: rgba(255, 255, 255, 0.8); /* Transparent white background */
+            border-radius: 15px;
+            box-shadow: 0 0 30px rgba(0, 0, 0, 0.3); /* Stronger shadow effect */
+            text-align: center;
+            backdrop-filter: blur(10px); /* Blurred background behind the container */
+            transition: transform 0.5s ease-in-out;
+        }
+
+        .container:hover {
+            transform: scale(1.05); /* Zoom effect on hover */
+        }
+
+        h1 {
+            color: #333;
+            font-size: 60px; /* Larger font size */
+            margin-bottom: 40px;
+            font-weight: bold;
+            text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.3); /* Text shadow for creativity */
+        }
+
+        form {
+            margin-bottom: 40px;
+            animation: fadeIn 1.5s ease-in-out; /* Animation on form appearance */
+        }
+
+        /* File upload button style */
+        input[type="file"] {
+            display: none;
+        }
+
+        .custom-file-upload {
+            display: inline-block;
+            padding: 20px 40px;
+            cursor: pointer;
+            background-color: #ff6f61; /* Creative button color */
+            color: #fff;
+            border: none;
+            border-radius: 10px;
+            font-size: 28px;
+            transition: background-color 0.3s, transform 0.3s;
+        }
+
+        .custom-file-upload:hover {
+            background-color: #e55d4a;
+            transform: scale(1.05); /* Subtle scale effect on hover */
+        }
+
+        input[type="submit"] {
+            display: block;
+            margin: 40px auto 0;
+            padding: 20px 40px;
+            border: none;
+            border-radius: 10px;
+            background-color: #007bff;
+            color: #fff;
+            font-size: 32px;
+            cursor: pointer;
+            transition: background-color 0.3s, transform 0.3s;
+        }
+
+        input[type="submit"]:hover {
+            background-color: #0056b3;
+            transform: scale(1.05);
+        }
+
+        #image-preview {
+            display: none;
+            margin-top: 50px;
+        }
+
+        #image-preview img {
+            max-width: 80%;
+            max-height: 500px;
+            border-radius: 12px;
+            box-shadow: 0 0 25px rgba(0, 0, 0, 0.3); /* Stronger shadow for image */
+            animation: fadeIn 2s ease-in-out; /* Smooth fade-in effect */
+        }
+
+        p {
+            color: #fff;
+            font-size: 28px;
+            font-weight: bold;
+            text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.5); /* Text shadow for emphasis */
+        }
+
+        /* Animation keyframes */
+        @keyframes fadeIn {
+            0% {
+                opacity: 0;
+            }
+            100% {
+                opacity: 1;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Upload Image for Size Prediction</h1>
+        <form action="/" method="post" enctype="multipart/form-data">
+            <label for="file-upload" class="custom-file-upload">Choose File</label>
+            <input id="file-upload" type="file" name="file" onchange="previewImage(event)">
+            <input type="submit" value="Upload">
+        </form>
+
+        <div id="image-preview">
+            <h3>Image Preview:</h3>
+            <img id="preview-img" src="" alt="Image Preview">
+        </div>
+
+        {% if message %}
+            <p>{{ message }}</p>
+        {% endif %}
+    </div>
+
+    <script>
+        function previewImage(event) {
+            var reader = new FileReader();
+            reader.onload = function() {
+                var output = document.getElementById('preview-img');
+                output.src = reader.result;
+                document.getElementById('image-preview').style.display = 'block';
+            }
+            reader.readAsDataURL(event.target.files[0]);
+        }
+    </script>
+</body>
+</html>
